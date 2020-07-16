@@ -18,7 +18,7 @@ RUN npm install
 RUN npm install -g @angular/cli
 
 # add app
-COPY ./dist/harness /app
+COPY . /app
 
 # start app
 CMD ng serve --host 0.0.0.0
