@@ -2,5 +2,170 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "harness": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/harness",
+      "sourceRoot": "projects/harness/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/harness",
+            "index": "projects/harness/src/index.html",
+            "main": "projects/harness/src/main.ts",
+            "polyfills": "projects/harness/src/polyfills.ts",
+            "tsConfig": "projects/harness/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/harness/src/favicon.ico",
+              "projects/harness/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "projects/harness/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/harness/src/environments/environment.ts",
+                  "with": "projects/harness/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "harness:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "harness:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "harness:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/harness/src/test.ts",
+            "polyfills": "projects/harness/src/polyfills.ts",
+            "tsConfig": "projects/harness/tsconfig.spec.json",
+            "karmaConfig": "projects/harness/karma.conf.js",
+            "assets": [
+              "projects/harness/src/favicon.ico",
+              "projects/harness/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "projects/harness/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/harness/tsconfig.app.json",
+              "projects/harness/tsconfig.spec.json",
+              "projects/harness/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/harness/e2e/protractor.conf.js",
+            "devServerTarget": "harness:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "harness:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "pattern-printer-angular": {
+      "projectType": "library",
+      "root": "projects/pattern-printer-angular",
+      "sourceRoot": "projects/pattern-printer-angular/src",
+      "prefix": "pattern",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/pattern-printer-angular/tsconfig.lib.json",
+            "project": "projects/pattern-printer-angular/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pattern-printer-angular/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pattern-printer-angular/src/test.ts",
+            "tsConfig": "projects/pattern-printer-angular/tsconfig.spec.json",
+            "karmaConfig": "projects/pattern-printer-angular/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/pattern-printer-angular/tsconfig.lib.json",
+              "projects/pattern-printer-angular/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "harness"
 }
